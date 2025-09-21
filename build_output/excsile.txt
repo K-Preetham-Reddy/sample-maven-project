@@ -1,0 +1,50 @@
+For WebApp using Tomcat serrver:
+Download correct Tomcat server requirements zip file from apache website if already not installed.
+Step-by-Step Procedure to Deploy Using the Servers Section in Eclipse
+
+Open the Servers View:
+
+In Eclipse, go to Window > Show View > Other... > Server > Servers > OK. This opens the Servers tab at the bottom of the IDE (if not already visible).
+
+
+Add a New Server Runtime Environment (if not already set up):
+
+Go to Window > Preferences > Server > Runtime Environments > Add....
+Expand Apache > Select "Apache Tomcat v9.0" (or v10.0 if using Jakarta EE; v9.0 is fine for standard Servlet/JSP with Java 11).
+Check "Create a new local server" if prompted.
+Click Next > Browse to your extracted Tomcat folder (e.g., C:\Tomcat\apache-tomcat-9.0.x) > Finish.
+
+
+Create a New Server Instance in the Servers View:
+
+In the Servers tab, right-click > New > Server.
+Select Apache > Tomcat v9.0 Server (or your version) > Next.
+If not already set, browse to the Tomcat installation directory > Next > Finish.
+You should now see "Tomcat v9.0 Server at localhost" (or similar) in the Servers tab, with status [Stopped].
+
+
+Configure the Server (Including Port 8080):
+
+Double-click the server entry in the Servers tab to open the editor.
+Under "Server Locations," select "Use Tomcat installation" (this uses your external Tomcat for deployment, similar to dropping WAR in webapps/).
+Under "Ports," verify HTTP/1.1 is set to 8080 (default). If there's a conflict (e.g., another app using 8080), change it to an available port, but keep it as 8080 per your request. Save changes (Ctrl+S).
+If needed, under "Publishing," select "Automatically publish when resources change" for auto-redeploy on code changes.
+
+
+Deploy the Project to the Server:
+
+Right-click the server in the Servers tab > Add and Remove....
+In the dialog, select your project (HospitalMgmtSystem) from "Available" > Add > Finish. This deploys the project in exploded form (equivalent to unpacking the WAR in webapps/).
+Alternatively, right-click your project > Run As > Run on Server > Select the Tomcat server > Next > Ensure the project is added > Finish. This deploys and starts the server if not running.
+
+
+Start the Server:
+
+Right-click the server in the Servers tab > Start (or Debug for debugging mode).
+Watch the Console tab for startup logs. It should show "Server startup in X ms" and no errors. If there are issues (e.g., port conflict), stop the server, adjust ports in the editor, and restart.
+
+
+Access the Application:
+
+Once started, open a browser and go to http://localhost:8080/HospitalMgmtSystem/index.jsp (adjust if you changed the port or context root).
+If it's the root app or no index.jsp loads, check Console for errors or verify deployment in the Servers tab (status sh
