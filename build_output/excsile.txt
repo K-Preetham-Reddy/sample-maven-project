@@ -1,4 +1,13 @@
-For WebApp using Tomcat serrver:
+File->import->Git->Projects from Git(with smart Import)->Clone URL->paste the link
+
+Start working on POM.xml file
+
+Right click over the project folder->clean->install->test->build
+
+clean install test->apply->run
+
+
+For WebApp using Tomcat server:
 Download correct Tomcat server requirements zip file from apache website if already not installed.
 Step-by-Step Procedure to Deploy Using the Servers Section in Eclipse
 
@@ -6,6 +15,11 @@ Open the Servers View:
 
 In Eclipse, go to Window > Show View > Other... > Server > Servers > OK. This opens the Servers tab at the bottom of the IDE (if not already visible).
 
+For java
+<plugin>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-maven-plugin</artifactId>
+</plugin>
 
 Add a New Server Runtime Environment (if not already set up):
 
@@ -48,3 +62,128 @@ Access the Application:
 
 Once started, open a browser and go to http://localhost:8080/HospitalMgmtSystem/index.jsp (adjust if you changed the port or context root).
 If it's the root app or no index.jsp loads, check Console for errors or verify deployment in the Servers tab (status sh
+
+
+
+
+---------------------
+
+git init
+
+git add.
+
+git config user.name "name"
+git config user.email "email"
+
+----------------------
+
+Docker
+
+docker ps -a(all ima)
+
+docker image ls
+
+docker login
+
+FROM tomcat:9.0
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+EXPOSE 8080
+CMD ["catalina.sh","run"]
+
+
+docker build -t image_image .
+
+docker run -d -p 8010:8080 --name container image_image
+
+docker tag image_image preetham2929/image_image:latest
+
+docker push preetham2929/image_image:tag
+
+
+docker run -it ubuntu bash
+
+docker stop containerid
+
+docker rm containerid
+
+docker rmi image
+
+Docker Compose
+
+pre-tomcat
+
+version: "3.9"
+services:
+  webapp1:
+    image: image_image
+    container_name: webapp_8090
+    ports:
+      - "8090:8080"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1024m"
+    networks:
+      - app-network
+
+  webapp2:
+    image: image_image
+    container_name: webapp_8030
+    ports:
+      - "8030:8080"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1024m"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+version: "3.9"
+services:
+  webapp1:
+    image: image_image
+    container_name: webapp_8090
+    ports:
+      - "8090:8080"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1024m"
+    networks:
+      - app-network
+
+  webapp2:
+    image: image_image
+    container_name: webapp_8030
+    ports:
+      - "8030:8080"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1024m"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+docker-compose up -d
+
+docker-compose ps
+
+docker-compose down
+
+docker-compose up -d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
