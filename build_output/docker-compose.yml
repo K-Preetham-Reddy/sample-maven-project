@@ -24,6 +24,89 @@ networks:
   app-network:
     driver: bridge
 
+version: '3.8'
+
+services:
+  hospital-app:
+    build: .
+    container_name: hospital-mgmt-system
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - hospital-network
+
+
+  mongodb:
+    image: mongo:6.0
+    container_name: hospital-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"  
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: hospital_db
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - hospital-network
+
+
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  hospital-network:
+    driver: bridge
+
+
+
+version: '3.8'
+
+services:
+  hospital-app:
+    build: .
+    container_name: hospital-mgmt-system
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+    networks:
+      - hospital-network
+
+  postgresql:
+    image: postgres:15
+    container_name: hospital-postgresql
+    restart: unless-stopped
+    ports:
+      - "5432:5432" 
+    environment:
+      POSTGRES_DB: hospital_db
+      POSTGRES_USER: hospital_user
+      POSTGRES_PASSWORD: hospital_password
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - hospital-network
+
+volumes:
+  postgresql_data:
+    driver: local
+
+networks:
+  hospital-network:
+    driver: bridge
+
+
+
+
+
+
+
 version: "3.9"
 services:
   app:
